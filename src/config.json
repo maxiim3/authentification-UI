@@ -1,0 +1,11 @@
+{
+  "apiEndPoint" : {
+    "ROOT" : "http://localhost:3000",
+    "COURSES" : "http://localhost:3000/courses"
+  },
+  "paths": {
+    "ROOT" : "/",
+    "HOME" : "/home",
+    "ABOUT" : "/about"
+  }
+}

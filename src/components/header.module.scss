@@ -1,0 +1,13 @@
+.header {
+	width: 100%;
+	border-bottom: 1px solid #5f5f5f;
+	padding-block: 1.5rem;
+}
+
+.linksContainer {
+	display: flex;
+	align-items: center;
+	flex-flow: row wrap;
+	justify-content: center;
+	column-gap: 4rem;
+}
