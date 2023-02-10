@@ -8,7 +8,7 @@ export default () => {
 	const [courses, setCourses] = useState([])
 
 	useEffect(() => {
-		const courses = fetchData("http://localhost:3000/courses").then(courses => {
+		const courses = fetchData("http://localhost:3000/api/courses").then(courses => {
 			if (courses.length > 0) {
 				setCourses(courses)
 			}
@@ -33,6 +33,7 @@ export default () => {
 	return (
 		<main className={style.mainContent}>
 			<h1>Welcome to the Vte, React Template</h1>
+			<a href="http://localhost:3000">Back</a>
 			{isLoading ? (
 				<p>Loading...</p>
 			) : (
