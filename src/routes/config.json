@@ -1,0 +1,8 @@
+{
+	"paths": {
+		"ROOT": "/",
+		"LOGIN": "/login",
+		"REGISTER": "/register",
+		"ERROR": "/error"
+	}
+}

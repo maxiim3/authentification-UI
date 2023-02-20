@@ -1,0 +1,20 @@
+{
+	"api": {
+		"ROOT": "https://maxiim3-api-test.up.railway.app/api",
+		"LOGIN": "https://maxiim3-api-test.up.railway.app/api/login",
+		"USERS": {
+			"ALL": "https://maxiim3-api-test.up.railway.app/api/users",
+			"ONE": "https://maxiim3-api-test.up.railway.app/api/users/me"
+		}
+	},
+	"local": {
+		"ROOT": "http://localhost:3000/api",
+		"LOGIN": "http://localhost:3000/api/auth",
+		"GET_ALL_USERS": "http://localhost:3000/api/users",
+		"GET_ALL_USERS_PROTECTED": "http://localhost:3000/api/users/protected",
+		"CREATE_USER": "http://localhost:3000/api/users",
+		"CREATE_USER_PROTECTED": "http://localhost:3000/api/users/protected",
+		"GET_USER_PROFILE": "http://localhost:3000/api/users/me",
+		"UPDATE_USER_PROFILE": "http://localhost:3000/api/users/me"
+	}
+}

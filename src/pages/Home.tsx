@@ -1,70 +1,101 @@
-import style from "./home.module.scss"
-import React, {useEffect, useState} from "react"
-import {fetchData, updateData} from "../hooks/useHandleRequests"
+import React, {useEffect, useReducer} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {Link} from "react-router-dom"
+import {paths} from "../routes/config.json"
+import {requestUpdateUser} from "../api/api"
 
-export default () => {
-	const [isUpdating, setIsUpdating] = useState(false)
-	const [isLoading, setIsLoading] = useState(true)
-	const [courses, setCourses] = useState([])
-
-	useEffect(() => {
-		const courses = fetchData("http://localhost:3000/api/courses").then(courses => {
-			if (courses.length > 0) {
-				setCourses(courses)
+type FormAction = {
+	type: "email" | "name"
+	payload: string
+}
+type T_initialFormState = {email?: string | undefined; name?: string | undefined}
+const formReducer = (state: T_initialFormState, action: FormAction) => {
+	switch (action.type) {
+		case "email":
+			return {
+				...state,
+				email: action.payload,
 			}
-		})
-	}, [isUpdating])
-
-	useEffect(() => {
-		if (courses.length > 0) {
-			setIsLoading(false)
-		}
-	}, [courses])
-
-	const onSubmit = (e: any, course: any) => {
-		e.preventDefault()
-		const value = e.target.querySelector("input").value as number
-		updateData(course, value).then(() => {
-			console.log("updated")
-			setIsUpdating(!isUpdating)
-		})
+		case "name":
+			return {
+				...state,
+				name: action.payload,
+			}
+		default:
+			return state
 	}
+}
+export default () => {
+	const {user, app} = useSelector(state => state)
+	const dispatch = useDispatch()
+	const initialFormState: T_initialFormState = {
+		email: user.email,
+		name: user.name,
+	}
+	const [form, dispatchForm] = useReducer(formReducer, initialFormState)
+	useEffect(() => {
+		dispatchForm({type: "email", payload: user.email})
+		dispatchForm({type: "name", payload: user.name})
+	}, [])
 
-	return (
-		<main className={style.mainContent}>
-			<h1>Welcome to the Vte, React Template</h1>
-			<a href="http://localhost:3000">Back</a>
-			{isLoading ? (
-				<p>Loading...</p>
-			) : (
-				courses.map(course => (
-					<div
-						className={style.course}
-						/*@ts-ignore*/
-						key={course.id}>
-						{/*@ts-ignore*/}
-						<h3>{course.title}</h3>
-						{/*@ts-ignore*/}
-						<h4>{course._id}</h4>
-						{/*@ts-ignore*/}
-						<p>{course.author}</p>
-						{/*@ts-ignore*/}
-						<p>{course.price} €</p>
-						<form
-							onSubmit={e => onSubmit(e, course)}
-							method={"patch"}>
-							<input type="number" />
-							<button>Update</button>
-						</form>
+	const handleSubmit = async (e: React.MouseEvent) => {
+		// need to be moved to a reducer or a service
+		e.preventDefault()
+		// add validation
+		if (!form.email || !form.name) {
+			return console.log("Enter email and password")
+		}
+		try {
+			const {user} = await requestUpdateUser(form, localStorage.getItem("token"))
+			console.log(user)
+		} catch (e) {
+			console.log("Error in handleSubmit", e)
+		}
+	}
+	if (app.isLoggedIn && user.name) {
+		return (
+			<>
+				<h1>Welcome {user.name.split(" ").at(0).toUpperCase()}</h1>
+
+				<form>
+					<div>
+						<h3>Name</h3>
+						<label>
+							{form.name}
+							<input
+								type="text"
+								placeholder="Name"
+								onChange={e => {
+									dispatchForm({type: "name", payload: e.target.value})
+								}}
+							/>
+						</label>
 					</div>
-				))
-			)}
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid beatae distinctio
-				dolore ea illo labore magni odio perferendis praesentium, quibusdam quidem quis
-				quisquam sequi?
-			</p>
-			<section className={style.cardContainer}></section>
-		</main>
+					<div>
+						<h3>Email</h3>
+						<label>
+							{form.email}
+							<input
+								type="text"
+								placeholder="Email"
+								onChange={e => {
+									dispatchForm({type: "email", payload: e.target.value})
+								}}
+							/>
+						</label>
+					</div>
+					<button onClick={handleSubmit}>Submit</button>
+				</form>
+			</>
+		)
+	}
+	return (
+		<>
+			<h1>Welcome</h1>
+
+			<h2>
+				Please <Link to={paths.LOGIN}>Log in</Link> to access your informations
+			</h2>
+		</>
 	)
 }

@@ -1,0 +1,1 @@
+export const initToken = () => localStorage.setItem("token", import.meta.env.VITE_TOKEN)
