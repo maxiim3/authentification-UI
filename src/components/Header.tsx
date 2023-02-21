@@ -34,6 +34,7 @@ export default () => {
 						</NavLink>
 					</>
 				)}
+				<NavLink to={paths.USERS}>Users</NavLink>
 			</ul>
 		</header>
 	)

@@ -3,6 +3,7 @@
 		"ROOT": "/",
 		"LOGIN": "/login",
 		"REGISTER": "/register",
-		"ERROR": "/error"
+		"ERROR": "/error",
+		"USERS": "/users"
 	}
 }

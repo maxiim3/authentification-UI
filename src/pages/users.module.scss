@@ -1,0 +1,63 @@
+.list {
+	display: flex;
+	flex-flow: row wrap;
+	gap: 24px;
+}
+
+.card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 8px;
+
+	dl {
+		font-weight: bold;
+		opacity: 60%;
+		color: darken(white, 30%);
+	}
+
+	dd {
+		margin-bottom: 8px;
+	}
+
+	dd:last-of-type {
+		overflow: hidden;
+		width: 24ch;
+		white-space: break-spaces;
+		text-overflow: ellipsis;
+		opacity: 15%;
+		color: darken(white, 50%);
+	}
+}
+
+.delBtn {
+	position: absolute;
+	top: -2px;
+	right: 8px;
+	bottom: 0;
+	display: grid;
+	box-sizing: border-box;
+	$btnSize: 32px;
+	width: $btnSize;
+	height: $btnSize;
+	color: white;
+	border: none;
+	//border-radius: 100%;
+	background: transparent;
+	place-items: center;
+
+	&[data-animated="true"] {
+		transition: all 150ms ease-in-out;
+		scale: 105%;
+	}
+
+	&[data-animated="false"] {
+		transition: all 150ms ease-in-out;
+		scale: 100%;
+	}
+}
+
+.cross {
+	width: inherit;
+	height: inherit;
+}

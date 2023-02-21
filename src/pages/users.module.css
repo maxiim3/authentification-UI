@@ -1,0 +1,58 @@
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 24px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+.card dl {
+  font-weight: bold;
+  opacity: 60%;
+  color: #b3b3b3;
+}
+.card dd {
+  margin-bottom: 8px;
+}
+.card dd:last-of-type {
+  overflow: hidden;
+  width: 24ch;
+  white-space: break-spaces;
+  text-overflow: ellipsis;
+  opacity: 15%;
+  color: gray;
+}
+
+.delBtn {
+  position: absolute;
+  top: -2px;
+  right: 8px;
+  bottom: 0;
+  display: grid;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  color: white;
+  border: none;
+  background: transparent;
+  place-items: center;
+}
+.delBtn[data-animated=true] {
+  transition: all 150ms ease-in-out;
+  scale: 105%;
+}
+.delBtn[data-animated=false] {
+  transition: all 150ms ease-in-out;
+  scale: 100%;
+}
+
+.cross {
+  width: inherit;
+  height: inherit;
+}
+
+/*# sourceMappingURL=users.module.css.map */

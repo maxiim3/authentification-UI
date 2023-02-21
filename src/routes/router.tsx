@@ -8,17 +8,16 @@ import {
 } from "react-router-dom"
 import Home from "../pages/Home"
 import {paths} from "./config.json"
-import Login from "../pages/Form"
+import Login from "../pages/Login"
 import Register from "../pages/Register"
 import Error from "../pages/Error"
 import LayoutContainer from "../components/LayoutContainer"
-import useOnLoad from "../hooks/useOnLoad"
+import Users from "../pages/Users"
 
 export default createBrowserRouter(
 	createRoutesFromElements(
 		<Route
 			path={paths.ROOT}
-			// loader={useOnLoad}
 			element={
 				<LayoutContainer>
 					<Outlet />
@@ -36,6 +35,10 @@ export default createBrowserRouter(
 			<Route
 				path={paths.REGISTER}
 				element={<Register />}
+			/>
+			<Route
+				path={paths.USERS}
+				element={<Users />}
 			/>
 			<Route
 				path={paths.ERROR}

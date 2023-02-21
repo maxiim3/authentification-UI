@@ -1,5 +1,6 @@
 import http from "./axiosHTTP"
 import {local} from "./config.json"
+import {useJWTDecoder} from "../hooks/useJWTDecoder"
 
 /**
  * This module will be used to make API calls to the backend.
@@ -33,6 +34,7 @@ export const requestLogIn = async (email: string, password: string) => {
 		return {token, user}
 	} catch (err) {
 		console.error("Error in api.tsx", err)
+		//@ts-ignore
 		throw new Error(err)
 	}
 }
@@ -76,6 +78,7 @@ export const requestRegisterUser = async (formProps: {
 		return {user}
 	} catch (err) {
 		console.error("Error in api.tsx", err)
+		//@ts-ignore
 		throw new Error(err)
 	}
 }
@@ -94,7 +97,10 @@ export const requestUpdateUser = async (
 		if (res.data.status !== 200) throw new Error("Error in updating user")
 
 		const {body} = res.data
+		const {_id: decodedId} = await useJWTDecoder(token)
+
 		const user = {
+			_id: decodedId,
 			name: body?.name,
 			email: body?.email,
 		}
@@ -102,6 +108,34 @@ export const requestUpdateUser = async (
 		return {user}
 	} catch (err) {
 		console.error("Error in api.tsx", err)
+		//@ts-ignore
+		throw new Error(err)
+	}
+}
+
+export const requestAllUsers = async () => {
+	try {
+		const res = await http().get(local.GET_ALL_USERS)
+
+		// if (res.data.status !== 2) throw new Error("Error in getting all users")
+		return res
+	} catch (err) {
+		console.error("Error in api.tsx", err)
+		//@ts-ignore
+		throw new Error(err)
+	}
+}
+
+export const requestDeleteUser = async (id: string) => {
+	try {
+		const payload = {
+			id,
+		}
+		const res = await http().delete(local.GET_ALL_USERS, {data: payload})
+		return res
+	} catch (err) {
+		console.error("Error in api.tsx", err)
+		//@ts-ignore
 		throw new Error(err)
 	}
 }
